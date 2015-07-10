@@ -14,7 +14,14 @@ exports.load=function(req,res,next,quizId){
 };
 
 exports.index=function(req,res,next){
-    models.Quiz.findAll().then(function(quizes){
+    var buscar='%';
+    
+    if(req.query.search){
+        buscar='%'+req.query.search+'%';
+        buscar=buscar.replace(/ /g,"%");
+    }
+    
+    models.Quiz.findAll({where: ["pregunta like ?",buscar],order: 'pregunta ASC'}).then(function(quizes){
         res.render('quizes/index.ejs',{quizes:quizes});
     }).catch(function(error){next(error);});
 };
