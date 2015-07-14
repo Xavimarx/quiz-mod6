@@ -30,6 +30,12 @@ exports.show=function(req,res){
     res.render('quizes/show',{quiz:req.quiz,errors:[]});
 };
 
+exports.destroy=function(req,res){
+    req.quiz.destroy().then(function(){
+        res.redirect('/quizes');
+    }).catch(function(error){next(error)});
+}
+
 
 exports.answer=function(req,res){
     var resultado="Incorrecto";
