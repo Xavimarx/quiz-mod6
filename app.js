@@ -32,6 +32,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req,res,next){
     if(!req.path.match(/\/login|\/logout/)){
         req.session.redir=req.path;
+        
+        if(req.session.time){
+            var tmp=new Date();
+            var expiar;
+            tmp.setMinutes(tmp.getMinutes()-2);
+            if(new Date(req.session.time)<tmp){
+                    delete req.session.user;
+                    delete req.session.time;
+            }
+        }
     }
     
     res.locals.session=req.session;

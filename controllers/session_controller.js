@@ -31,6 +31,7 @@ exports.create=function(req,res){
         }
         
         req.session.user={id:user.id,username:user.username};
+        req.session.time=new Date();//-------------
         
         res.redirect(req.session.redir.toString());
     });
@@ -38,5 +39,7 @@ exports.create=function(req,res){
 
 exports.destroy=function(req,res){
     delete req.session.user;
+    delete req.session.time;
+    
     res.redirect(req.session.redir.toString());
 }
