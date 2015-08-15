@@ -35,12 +35,12 @@ app.use(function(req,res,next){
         
         if(req.session.time){
             var tmp=new Date();
-            var expiar;
             tmp.setMinutes(tmp.getMinutes()-2);
             if(new Date(req.session.time)<tmp){
                     delete req.session.user;
                     delete req.session.time;
-            }
+            }else
+                    req.session.time=new Date();
         }
     }
     
